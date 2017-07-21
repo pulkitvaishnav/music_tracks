@@ -1,0 +1,24 @@
+{% if track_list %}
+    <ul>
+    {% for track in track_list %}
+        <li><a href="/track/{{ track.id }}/">{{ track.title }}</a></li>
+    {% endfor %}
+    </ul>
+    <div class="pagination">
+	    <span class="step-links">
+	        {% if track_list.has_previous %}
+	            <a href="?page={{ track_list.previous_page_number }}">previous</a>
+	        {% endif %}
+
+	        <span class="current">
+	            Page {{ track_list.number }} of {{ track_list.paginator.num_pages }}.
+	        </span>
+
+	        {% if track_list.has_next %}
+	            <a href="?page={{ track_list.next_page_number }}">next</a>
+	        {% endif %}
+	    </span>
+	</div>
+{% else %}
+    <p>No music tracks are available.</p>
+{% endif %}
