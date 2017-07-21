@@ -1,14 +1,35 @@
 from django import forms
-from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404, render
 from .models import Track
 from .forms import TrackForm, GenresForm
 
+
+def track_list(request):
+    track_list = Track.objects.all()
+    paginator = Paginator(track_list, 10)
+    page = request.GET.get('page')
+    # import pdb; pdb.set_trace()
+    try:
+        tracks = paginator.page(page)
+    except PageNotAnInteger:
+        tracks = paginator.page(1)
+    except EmptyPage:
+        tracks = paginator.page(paginator.num_pages)
+    context = {'track_list': tracks}
+    return render(request, 'tracks/track_list.html', context)
+
+
+def track_detail(request, track_id):
+    track = get_object_or_404(Track, pk=track_id)
+    return render(request, 'tracks/track_detail.html', {'track': track.title})
+
+
 def add_track(request):
     if request.method == 'POST':
-        form = TrackForm(request.POST)
+        form = TrackForm()
         if form.is_valid():
             form.save()
-            # return redirect('tracks-add')
     else:
         form = TrackForm
         
@@ -17,10 +38,9 @@ def add_track(request):
 
 def add_genres(request):
     if request.method == 'POST':
-        form = GenresForm(request.POST)
+        form = GenresForm()
         if form.is_valid():
             form.save()
-            # return redirect('tracks-add')
     else:
         form = GenresForm
         
