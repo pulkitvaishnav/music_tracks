@@ -1,7 +1,7 @@
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
-from .models import Track
+from .models import Track, Genres
 from .forms import TrackForm, GenresForm
 
 
@@ -34,6 +34,26 @@ def add_track(request):
         form = TrackForm
         
     return render(request, 'tracks/track_form.html', {'form': form})
+
+
+def genre_list(request):
+    genre_list = Genres.objects.all()
+    paginator = Paginator(genre_list, 10)
+    page = request.GET.get('page')
+    # import pdb; pdb.set_trace()
+    try:
+        genres = paginator.page(page)
+    except PageNotAnInteger:
+        genres = paginator.page(1)
+    except EmptyPage:
+        genres = paginator.page(paginator.num_pages)
+    context = {'genre_list': genres}
+    return render(request, 'genres/genre_list.html', context)
+
+
+def genre_detail(request, genres_id):
+    genres = get_object_or_404(Genres, pk=genres_id)
+    return render(request, 'genres/genre_detail.html', {'genre': genres.genre})
 
 
 def add_genres(request):
