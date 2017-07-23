@@ -9,7 +9,7 @@
 		  		{{ track.title }} [{{ track.genre.genre }}]
 		    </div>
 		    <div class="col-xs-6 col-md-4">
-		     <a class="btn btn-default" href="{% url 'Track:tracks-add' %}" role="button">Edit</a>
+		     <a class="btn btn-default" href="{% url 'Track:tracks-edit' pk=track.pk %}" role="button">Edit</a>
 		    </div>
 		</h1>
 	  </div>
