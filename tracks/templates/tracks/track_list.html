@@ -2,6 +2,17 @@
 
 {% block content %}
 	{% if track_list %}
+		<div class="row">
+		<form type="get" class="form-horizontal" action="." style="margin: 0">
+			<div class="form-group">
+		    	<input  id="search_box" class="form-control" type="text" name="search_box" placeholder="Search Song Track by Title or Genre [ e.g. 'Shape of you' || 'pop / jazz / classical' ]" >
+		    </div>
+		    <div class="form-group">
+		    	<button id="search_submit" class="btn btn-default center-block"  type="submit" >Submit</button>
+		    </div>
+		</form>
+		</div>
+		<div class="row">
 	    <ul class="list-group">
 	    {% for track in track_list %}
 			<a href="/track/{{ track.id }}/">
@@ -31,4 +42,5 @@
 	    <p>No music tracks are available.</p>
 	{% endif %}
 	<a class="btn btn-primary btn-lg btn-block" href="{% url 'Track:tracks-add' %}" role="button">Add New Track</a>
+	</div>
 {% endblock %}
