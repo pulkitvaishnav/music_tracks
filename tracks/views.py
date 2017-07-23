@@ -30,16 +30,19 @@ def track_detail(request, track_id):
     return render(request, 'tracks/track_detail.html', {'track': track})
 
 
-def add_track(request):
-    if request.method == 'POST':
+def add_track(request, pk=None):
+    try:
+        instance = Track.objects.get(pk=pk)
+    except :
         form = TrackForm(request.POST)
-        if form.is_valid():
-            post = form.save()
-            return redirect('Track:track_list')
     else:
-        form = TrackForm
-        
-    return render(request, 'tracks/track_form.html', {'form': form})
+        form = TrackForm(request.POST or None, instance=instance)
+    if request.method == 'POST':
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            return redirect('Track:track_detail', track_id=instance.pk)
+    return render(request, "tracks/track_form.html", {'form': form})
 
 
 def genre_list(request):
