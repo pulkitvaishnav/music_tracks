@@ -1,24 +1,34 @@
-{% if track_list %}
-    <ul>
-    {% for track in track_list %}
-        <li><a href="/track/{{ track.id }}/">{{ track.title }}</a></li>
-    {% endfor %}
-    </ul>
-    <div class="pagination">
-	    <span class="step-links">
-	        {% if track_list.has_previous %}
-	            <a href="?page={{ track_list.previous_page_number }}">previous</a>
-	        {% endif %}
+{% extends 'base.html' %}
 
-	        <span class="current">
-	            Page {{ track_list.number }} of {{ track_list.paginator.num_pages }}.
-	        </span>
+{% block content %}
+	{% if track_list %}
+	    <ul class="list-group">
+	    {% for track in track_list %}
+			<a href="/track/{{ track.id }}/">
+	    	    <li class="list-group-item">
+			    	<span class="badge">{{ track.rating }}</span>
+			    	{{ track.title }} [{{ track.genre.genre }}]
+		    	</li>
+			</a>
+	    {% endfor %}
+	    </ul>
+	    <div class="pagination">
+		    <span class="step-links">
+		        {% if track_list.has_previous %}
+		            <a class="btn btn-default" href="?page={{ track_list.previous_page_number }}">Previous</a>
+		        {% endif %}
 
-	        {% if track_list.has_next %}
-	            <a href="?page={{ track_list.next_page_number }}">next</a>
-	        {% endif %}
-	    </span>
-	</div>
-{% else %}
-    <p>No music tracks are available.</p>
-{% endif %}
+		        <span class="current">
+		            Page {{ track_list.number }} of {{ track_list.paginator.num_pages }}.
+		        </span>
+
+		        {% if track_list.has_next %}
+		            <a class="btn btn-default" href="?page={{ track_list.next_page_number }}">Next</a>
+		        {% endif %}
+		    </span>
+		</div>
+	{% else %}
+	    <p>No music tracks are available.</p>
+	{% endif %}
+	<a class="btn btn-primary btn-lg btn-block" href="{% url 'Track:tracks-add' %}" role="button">Add New Track</a>
+{% endblock %}
