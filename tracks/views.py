@@ -1,15 +1,20 @@
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from django.db.models import Q
 from .models import Track, Genres
 from .forms import TrackForm, GenresForm
 
 
 def track_list(request):
-    track_list = Track.objects.all()
+    search_word = request.GET.get('search_box')
+    if search_word:
+        track_list = Track.objects.filter(Q(title__icontains=search_word) |
+                                          Q(genre__genre__icontains=search_word))
+    else:
+        track_list = Track.objects.all()
     paginator = Paginator(track_list, 10)
     page = request.GET.get('page')
-    # import pdb; pdb.set_trace()
     try:
         tracks = paginator.page(page)
     except PageNotAnInteger:
@@ -22,14 +27,15 @@ def track_list(request):
 
 def track_detail(request, track_id):
     track = get_object_or_404(Track, pk=track_id)
-    return render(request, 'tracks/track_detail.html', {'track': track.title})
+    return render(request, 'tracks/track_detail.html', {'track': track})
 
 
 def add_track(request):
     if request.method == 'POST':
-        form = TrackForm()
+        form = TrackForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save()
+            return redirect('Track:track_list')
     else:
         form = TrackForm
         
@@ -40,7 +46,6 @@ def genre_list(request):
     genre_list = Genres.objects.all()
     paginator = Paginator(genre_list, 10)
     page = request.GET.get('page')
-    # import pdb; pdb.set_trace()
     try:
         genres = paginator.page(page)
     except PageNotAnInteger:
@@ -58,9 +63,10 @@ def genre_detail(request, genres_id):
 
 def add_genres(request):
     if request.method == 'POST':
-        form = GenresForm()
+        form = GenresForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save()
+            return redirect('Track:genre_list')
     else:
         form = GenresForm
         
