@@ -13,34 +13,33 @@
 		</form>
 		</div>
 		<div class="row">
-	    <ul class="list-group">
-	    {% for track in track_list %}
-			<a href="/track/{{ track.id }}/">
-	    	    <li class="list-group-item">
-			    	<span class="badge">{{ track.rating }}</span>
-			    	{{ track.title }} [{{ track.genre.genre }}]
-		    	</li>
-			</a>
-	    {% endfor %}
-	    </ul>
-	    <div class="pagination">
-		    <span class="step-links">
-		        {% if track_list.has_previous %}
-		            <a class="btn btn-default" href="?page={{ track_list.previous_page_number }}">Previous</a>
-		        {% endif %}
+		    <ul class="list-group">
+		    {% for track in track_list %}
+		    	<li class="list-group-item">
+				 	<span class="badge"><span class="stars" data-rating="{{ track.rating }}" data-num-stars="5" ></span></span>
+				   	<a href="/track/{{ track.id }}/">{{ track.title }}</a>
+				   	<a href="/genre/{{ track.genre.id }}/">[{{ track.genre.genre }}]</a>
+			    </li>
+			{% endfor %}
+		    </ul>
+		    <div class="pagination">
+			    <span class="step-links">
+			        {% if track_list.has_previous %}
+			            <a class="btn btn-default" href="?page={{ track_list.previous_page_number }}">Previous</a>
+			        {% endif %}
 
-		        <span class="current">
-		            Page {{ track_list.number }} of {{ track_list.paginator.num_pages }}.
-		        </span>
+			        <span class="current">
+			            Page {{ track_list.number }} of {{ track_list.paginator.num_pages }}.
+			        </span>
 
-		        {% if track_list.has_next %}
-		            <a class="btn btn-default" href="?page={{ track_list.next_page_number }}">Next</a>
-		        {% endif %}
-		    </span>
-		</div>
-	{% else %}
-	    <p>No music tracks are available.</p>
-	{% endif %}
-	<a class="btn btn-primary btn-lg btn-block" href="{% url 'Track:tracks-add' %}" role="button">Add New Track</a>
+			        {% if track_list.has_next %}
+			            <a class="btn btn-default" href="?page={{ track_list.next_page_number }}">Next</a>
+			        {% endif %}
+			    </span>
+			</div>
+		{% else %}
+		    <p>No music tracks are available.</p>
+		{% endif %}
+		<a class="btn btn-primary btn-lg btn-block" href="{% url 'Track:tracks-add' %}" role="button">Add New Track</a>
 	</div>
 {% endblock %}
