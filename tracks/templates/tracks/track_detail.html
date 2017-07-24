@@ -6,7 +6,9 @@
 	  <div class="row">
 	    <h1>
 		    <div class="col-xs-12 col-sm-6 col-md-8">
-		  		{{ track.title }} [{{ track.genre.genre }}]
+		  		{{ track.title }}<br>
+		  		<span class="badge"><span class="stars" data-rating="{{ track.rating }}" data-num-stars="5" ></span></span><br>
+		  		<a href="/genre/{{ track.genre.id }}/">{{ track.genre.genre }}</a><br>
 		    </div>
 		    <div class="col-xs-6 col-md-4">
 		     <a class="btn btn-default" href="{% url 'Track:tracks-edit' pk=track.pk %}" role="button">Edit</a>
