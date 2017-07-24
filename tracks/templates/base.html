@@ -6,6 +6,8 @@
 	<title>{% block title %}GreedyMusic{% endblock %}</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -18,17 +20,39 @@
             <!-- <li role="presentation"><a href="#">Contact</a></li> -->
           </ul>
         </nav>
-        <h3 class="text-muted">Greedy Music</h3>
+        <h3 class="text-muted"><a href="{% url 'Track:track_list' %}">Greedy Music</a></h3>
       </div>
+      <br>
 	      {% block content %}
 	      {% endblock %}
       </div>
-
-      <footer class="footer navbar-fixed-bottom">
+      <br><br>
+      <footer class="footer">
         <p>&copy; 2017 GreedyMusic, Inc.</p>
       </footer>
 
     </div>
 
 </body>
+<script>
+    $.fn.stars = function() {
+        return $(this).each(function() {
+
+            var rating = $(this).data("rating");
+
+            var numStars = $(this).data("numStars");
+
+            var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star"></i>');
+
+            var halfStar = ((rating%1) !== 0) ? '<i class="fa fa-star-half-empty"></i>': '';
+
+            var noStar = new Array(Math.floor(numStars + 1 - rating)).join('<i class="fa fa-star-o"></i>');
+
+            $(this).html(fullStar + halfStar + noStar);
+
+        });
+    }
+
+    $('.stars').stars();
+</script>
 </html>
