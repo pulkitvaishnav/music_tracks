@@ -61,7 +61,8 @@ def genre_list(request):
 
 def genre_detail(request, genres_id):
     genres = get_object_or_404(Genres, pk=genres_id)
-    return render(request, 'genres/genre_detail.html', {'genre': genres.genre})
+    return render(request, 'genres/genre_detail.html', {'genre': genres.genre,
+                                                        'genre_track': genres.track.all()})
 
 
 def add_genres(request):
