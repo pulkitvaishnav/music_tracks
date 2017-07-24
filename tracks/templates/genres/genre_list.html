@@ -15,7 +15,7 @@
 	    <div class="pagination">
 		    <span class="step-links">
 		        {% if genre_list.has_previous %}
-		            <a href="?page={{ genre_list.previous_page_number }}">previous</a>
+		            <a class="btn btn-default" href="?page={{ genre_list.previous_page_number }}">Previous</a>
 		        {% endif %}
 
 		        <span class="current">
@@ -23,7 +23,7 @@
 		        </span>
 
 		        {% if genre_list.has_next %}
-		            <a href="?page={{ genre_list.next_page_number }}">next</a>
+		            <a class="btn btn-default" href="?page={{ genre_list.next_page_number }}">Next</a>
 		        {% endif %}
 		    </span>
 		</div>
