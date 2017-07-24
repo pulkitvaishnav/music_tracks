@@ -13,6 +13,18 @@
 		    </div>
 		</h1>
 	  </div>
+	  <br><br>
+	  <div class="row">
+	    <ul class="list-group">
+	    {% for track in genre_track %}
+	    	<li class="list-group-item">
+			  	<span class="badge"><span class="stars" data-rating="{{ track.rating }}" data-num-stars="5" ></span></span>
+			   	<a href="/track/{{ track.id }}/">{{ track.title }}</a>
+		    </li>
+	    {% endfor %}
+	    </ul>
+	</div>
+
 	</div>
 	
 {% endblock %}
