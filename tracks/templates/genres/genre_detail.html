@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	
+	<div class="page-header">
+	  <div class="row">
+	    <h1>
+		    <div class="col-xs-12 col-sm-6 col-md-8">
+		  		{{ genre }}
+		    </div>
+		    <div class="col-xs-6 col-md-4">
+		     <a class="btn btn-default" href="{% url 'Track:genres-add' %}" role="button">Edit</a>
+		    </div>
+		</h1>
+	  </div>
+	  <br><br>
+	  <div class="row">
+	    <ul class="list-group">
+	    {% for track in genre_track %}
+	    	<li class="list-group-item">
+			  	<span class="badge"><span class="stars" data-rating="{{ track.rating }}" data-num-stars="5" ></span></span>
+			   	<a href="/track/{{ track.id }}/">{{ track.title }}</a>
+		    </li>
+	    {% endfor %}
+	    </ul>
+	</div>
+
+	</div>
+	
+{% endblock %}

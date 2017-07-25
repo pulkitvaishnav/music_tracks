@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	{% if genre_list %}
+	    <ul class="list-group">
+	    {% for genre in genre_list %}
+	        <a href="/genre/{{ genre.id }}/">
+	        	<li class="list-group-item">
+			    	{{ genre.genre }}
+		    	</li>
+	        </a>
+	    {% endfor %}
+	    </ul>
+	    <div class="pagination">
+		    <span class="step-links">
+		        {% if genre_list.has_previous %}
+		            <a class="btn btn-default" href="?page={{ genre_list.previous_page_number }}">Previous</a>
+		        {% endif %}
+
+		        <span class="current">
+		            Page {{ genre_list.number }} of {{ genre_list.paginator.num_pages }}.
+		        </span>
+
+		        {% if genre_list.has_next %}
+		            <a class="btn btn-default" href="?page={{ genre_list.next_page_number }}">Next</a>
+		        {% endif %}
+		    </span>
+		</div>
+	{% else %}
+	    <p>No genre are available.</p>
+	{% endif %}
+	<a class="btn btn-primary btn-lg btn-block" href="{% url 'Track:genres-add' %}" role="button">Add New Genre</a>
+	
+{% endblock %}
